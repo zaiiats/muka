@@ -89,7 +89,6 @@ const GridContainer = styled.div<{
 
 export default function Grid({
   grid,
-  setIsStarted,
   currentPlayer,
   setCurrentPlayer,
   cellsGrid,
