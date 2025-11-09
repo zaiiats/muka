@@ -263,8 +263,7 @@ const generateGridContent = (
 
   const gridHeightAdjusted = gridHeight * 2 + 1;
   const gridWidthAdjusted = gridWidth * 2 + 1;
-  const start = Date.now();
-
+  
   for (let i = 0; i < gridHeightAdjusted * gridWidthAdjusted; i++) {
     const row = Math.floor(i / gridWidthAdjusted);
     const col = i % gridWidthAdjusted;
