@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Grid from "./Grid";
 import Top from "./Top";
-import { generateSampleCellsGrid } from "../utils/generateSampleGrid";
+import {
+  generateSampleCellsGrid,
+  generateSampleGrid,
+} from "../utils/generateSampleGrid";
 
 export type CellType = 1 | 2 | -1;
 
@@ -34,12 +37,20 @@ export default function Game({
     generateSampleCellsGrid(gridHeight, gridWidth)
   );
 
+  useEffect(() => {
+    if (!gridHeight || !gridWidth) return;
+    const grid = generateSampleGrid(gridHeight, gridWidth);
+    setGrid(grid);
+  }, [gridHeight, gridWidth, setGrid]);
+
   return (
     <StyledWrapper>
       <Top
         setIsStarted={setIsStarted}
         currentPlayer={currentPlayer}
         cellsGrid={cellsGrid}
+        gridHeight={gridHeight}
+        gridWidth={gridWidth}
       />
       <Grid
         setIsStarted={setIsStarted}

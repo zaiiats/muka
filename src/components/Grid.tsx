@@ -12,13 +12,13 @@ const StyledWrapper = styled.div`
   height: 100%;
   padding: 1rem;
   overflow: hidden;
+  position: relative;
 `;
 
 const Dot = styled.div`
   width: 100%;
   height: 100%;
   background: #000;
-  border-radius: 9999px;
 `;
 
 const HorizontalLine = styled.div`
@@ -47,19 +47,22 @@ const VerticalLineFilled = styled(VerticalLine)`
 
 const Cell = styled.div`
   background: #fff;
-`;
-
-const CellX = styled(Cell)`
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
 `;
 
-const CellO = styled(CellX)``;
+const CellX = styled(Cell)`
+  background: #ec6969;
+`;
+
+const CellO = styled(Cell)`
+  background: #5875e8;
+`;
 
 const HorizontalLineBorder = styled(HorizontalLine)`
-  background: #000; /* рамка зверху/знизу завжди чорна */
+  background: #000;
 `;
 
 const VerticalLineBorder = styled(VerticalLine)`
@@ -85,6 +88,20 @@ const GridContainer = styled.div<{
     width: 100%;
     height: 100%;
   `}
+`;
+
+const EndBG = styled.div`
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-color: #cccccca0;
+  backdrop-filter: blur(1px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
 `;
 
 export default function Grid({
@@ -128,8 +145,6 @@ export default function Grid({
   );
 
   const handleLineClick = ({ row, col }: { row: number; col: number }) => {
-    console.log(row, col);
-
     const { cellsGrid: nextCellsGrid, grid: nextGrid } = fillNewLine(
       grid,
       cellsGrid,
@@ -156,61 +171,62 @@ export default function Grid({
 
   return (
     <StyledWrapper ref={containerRef}>
-      {isEnded ? (
-        <p>
-          Переміг: {" "}
+      {isEnded && (
+        <EndBG>
+          Переміг:{" "}
           {firstPlayerScore > secondPlayerScore
-            ? 'X'
-            : 'O'}
-        </p>
-      ) : (
-        <GridContainer
-          $size={size}
-          $gridColumns={getGridString(gridWidth)}
-          $gridRows={getGridString(gridHeight)}
-        >
-          {gridContent.map((item, idx) => {
-            if (item === "dot") return <Dot key={idx} />;
-            if (item === "horizontalLineBorder")
-              return <HorizontalLineBorder key={idx} />;
-            if (item === "verticalLineBorder")
-              return <VerticalLineBorder key={idx} />;
-
-            if (typeof item === "string") {
-              if (item === "emptyCell") return <Cell key={idx} />;
-              if (item === "xCell") return <CellX key={idx}>X</CellX>;
-              if (item === "oCell") return <CellO key={idx}>O</CellO>;
-            } else {
-              if (item.name === "horizontalLine")
-                return (
-                  <HorizontalLine
-                    onClick={() =>
-                      handleLineClick({ row: item.row, col: item.col })
-                    }
-                    key={idx}
-                  />
-                );
-              if (item.name === "horizontalLineFilled")
-                return <HorizontalLineFilled key={idx} />;
-              if (item.name === "verticalLine")
-                return (
-                  <VerticalLine
-                    onClick={() => {
-                      console.log(2);
-
-                      handleLineClick({ row: item.row, col: item.col });
-                    }}
-                    key={idx}
-                  />
-                );
-              if (item.name === "verticalLineFilled")
-                return <VerticalLineFilled key={idx} />;
-            }
-
-            return <div key={idx} />;
-          })}
-        </GridContainer>
+            ? "X"
+            : firstPlayerScore < secondPlayerScore
+            ? "O"
+            : "НІЧИЯ"}
+        </EndBG>
       )}
+      <GridContainer
+        $size={size}
+        $gridColumns={getGridString(gridWidth)}
+        $gridRows={getGridString(gridHeight)}
+      >
+        {gridContent.map((item, idx) => {
+          if (item === "dot") return <Dot key={idx} />;
+          if (item === "horizontalLineBorder")
+            return <HorizontalLineBorder key={idx} />;
+          if (item === "verticalLineBorder")
+            return <VerticalLineBorder key={idx} />;
+
+          if (typeof item === "string") {
+            if (item === "emptyCell") return <Cell key={idx} />;
+            if (item === "xCell") return <CellX key={idx}>X</CellX>;
+            if (item === "oCell") return <CellO key={idx}>O</CellO>;
+          } else {
+            if (item.name === "horizontalLine")
+              return (
+                <HorizontalLine
+                  onClick={() =>
+                    handleLineClick({ row: item.row, col: item.col })
+                  }
+                  key={idx}
+                />
+              );
+            if (item.name === "horizontalLineFilled")
+              return <HorizontalLineFilled key={idx} />;
+            if (item.name === "verticalLine")
+              return (
+                <VerticalLine
+                  onClick={() => {
+                    console.log(2);
+
+                    handleLineClick({ row: item.row, col: item.col });
+                  }}
+                  key={idx}
+                />
+              );
+            if (item.name === "verticalLineFilled")
+              return <VerticalLineFilled key={idx} />;
+          }
+
+          return <div key={idx} />;
+        })}
+      </GridContainer>
     </StyledWrapper>
   );
 }

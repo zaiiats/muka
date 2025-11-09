@@ -34,7 +34,6 @@ const GridButton = styled.button<{ selected?: boolean }>`
   transition: 0.15s;
 
   &:hover {
-    opacity: 0.9;
     transform: scale(1.05);
   }
 `;
@@ -42,14 +41,14 @@ const GridButton = styled.button<{ selected?: boolean }>`
 const ButtonStart = styled.button`
   padding: 1rem 4rem;
   border: none;
-  background: #3b82f6;
+  background: #f36a6a;
   color: #fff;
   font-size: 2rem;
   cursor: pointer;
   transition: 0.15s;
+  border-radius: 10px;
 
   &:hover {
-    opacity: 0.9;
     transform: scale(1.05);
   }
 `;
@@ -69,7 +68,7 @@ export default function Hello({
 }) {
   const options = [
     { w: 5, h: 5 },
-    { w: 8, h: 8 },
+    { w: 9, h: 9 },
     { w: 13, h: 13 },
   ];
 
