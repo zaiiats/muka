@@ -59,10 +59,7 @@ export default function Top({
     if (firstPlayerScore > secondPlayerScore) winner = 1;
     else if (secondPlayerScore > firstPlayerScore) winner = 2;
     else winner = null; // нічия
-  }
-
-  console.log(isEnded);
-  
+  }  
 
   // кольори як у клітинок
   const X_COLOR = "#ec6969";

@@ -213,8 +213,6 @@ export default function Grid({
               return (
                 <VerticalLine
                   onClick={() => {
-                    console.log(2);
-
                     handleLineClick({ row: item.row, col: item.col });
                   }}
                   key={idx}
@@ -237,7 +235,6 @@ const getGridString = (axis: number) => {
     text += "auto 1fr ";
   }
   text += "auto";
-  console.log(text);
   return text;
 };
 
@@ -319,7 +316,5 @@ const generateGridContent = (
       }
     }
   }
-
-  console.log("generated in", Date.now() - start, "ms");
   return gridContent;
 };
